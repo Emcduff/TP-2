@@ -1,0 +1,22 @@
+<table class="tableau">
+ <tr>
+ <th><a href='/trier/id/asc'>ID</a></th>
+ <th><a href='/trier/nom/asc'>Nom</a></th> 
+ <th><a href='/trier/prenom/asc'>Prenom</a></th>
+ <th><a href='/trier/telephone/asc'>Telephone</a></th>
+ <th><a href='/trier/courriel/asc'>Courriel</a></th>
+ <th>Ajouter</th>
+ <th>Modifier</th>
+ </tr>
+ <% adresse.forEach(elm => {%>
+ <tr>
+ <td><%= elm._id %></td>
+ <td contenteditable='true'><%= elm.nom %></td>
+ <td contenteditable='true'><%= elm.prenom %></td>
+ <td contenteditable='true'><%= elm.telephone %></td>
+ <td contenteditable='true'><%= elm.courriel %></td>
+ <td><a class='supprimer' href="#">Delete</a></td>
+ <td><a class='sauver' href="#">Sauver</a></td>
+ </tr>
+ <% }) %>
+ </table>

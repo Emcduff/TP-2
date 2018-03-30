@@ -1,0 +1,146 @@
+<%- include('composants/head') %> 
+<body>
+ <%- include('composants/entete') %>
+ <main class="content">
+ <%- include('composants/form_post') %>
+ <%- include('composants/adr') %>
+ </main>
+ <%- include('composants/footer') %>
+</body>
+
+
+<script type="text/javascript">
+
+//------------------------------------- Modifier
+
+	let elmSauver = document.querySelectorAll('.sauver')
+	for (elm of elmSauver)
+	{
+		elm.addEventListener('click', function()
+		{
+			let laLigne = this.parentNode.parentNode
+
+			xhr = new XMLHttpRequest();
+			xhr.open('POST', "/modifier_ajax", true);
+
+			data =
+			{
+				"_id" : laLigne.children[0].innerHTML, 
+ 				"nom" : laLigne.children[1].innerHTML,
+ 				"prenom" : laLigne.children[2].innerHTML,
+ 				"telephone" : laLigne.children[3].innerHTML,
+ 				"courriel" : laLigne.children[4].innerHTML
+			};
+
+			sData = JSON.stringify(data);
+			xhr.setRequestHeader('Content-type', 'application/json');
+			xhr.send(sData);
+			xhr.addEventListener("readystatechange", traiterRequest, false);
+
+			let elmForm = document.getElementById('mon_formulaire');
+ 			let elmInput = elmForm.querySelectorAll('input');
+
+ 			elmInput[0].value = sData["_id"];
+ 			elmInput[1].value = sData["nom"];
+ 			elmInput[2].value = sData["prenom"];
+ 			elmInput[3].value = sData["telephone"];
+ 			elmInput[4].value = sData["courriel"];
+		});
+
+		function traiterRequest(e)
+		{
+			if(xhr.readyState == 4 && xhr.status == 200)
+			{
+				console.log('modifier_ajax fonctionne');
+				let  maReponse = JSON.parse(xhr.responseText);
+			};
+		};
+	};
+
+//------------------------------------- Supprimer
+
+	let elmSupprimer = document.querySelectorAll('.supprimer')
+	for (elm of elmSupprimer)
+	{
+		elm.addEventListener('click', function()
+		{
+			let laLigne = this.parentNode.parentNode
+
+			xhr = new XMLHttpRequest();
+
+			data =
+			{
+				"_id" : laLigne.children[0].innerHTML, 
+ 				"nom" : laLigne.children[1].innerHTML,
+ 				"prenom" : laLigne.children[2].innerHTML,
+ 				"telephone" : laLigne.children[3].innerHTML,
+ 				"courriel" : laLigne.children[4].innerHTML
+			};
+
+			xhr.open('GET', "/supprimer_ajax/" + data["_id"], true);
+
+			sData = JSON.stringify(data);
+			xhr.setRequestHeader('Content-type', 'application/json');
+			xhr.send(sData);
+			xhr.addEventListener("readystatechange", traiterRequest, false);
+
+			laLigne.remove();
+		});
+
+		function traiterRequest(e)
+		{
+			if(xhr.readyState == 4 && xhr.status == 200)
+			{
+				console.log('supprimer_ajax fonctionne');
+				let  maReponse = JSON.parse(xhr.responseText);
+			};
+		};
+	};
+
+//------------------------------------- Ajouter
+
+	let elmAjouter = document.querySelectorAll('.ajouter');
+	document.getElementById("btnAjouter").addEventListener('click', function()
+	{
+		xhr = new XMLHttpRequest();
+		xhr.open('POST', "/ajouter_ajax", true);
+
+		if ((elmAjouter[0].value!="")&&(elmAjouter[1].value!="")&&(elmAjouter[2].value!="")&&(elmAjouter[3].value!=""))
+		{
+
+			data =
+			{
+ 				"nom" : elmAjouter[0].value,
+ 				"prenom" : elmAjouter[1].value,
+ 				"telephone" : elmAjouter[2].value,
+ 				"courriel" : elmAjouter[3].value
+ 			};
+
+ 			sData = JSON.stringify(data);
+
+ 			console.log(sData);
+
+			xhr.setRequestHeader('Content-type', 'application/json');
+			xhr.send(sData);
+			xhr.addEventListener("readystatechange", traiterRequest, false);
+
+			let node = document.createElement("TR");
+			console.log(node);
+
+			node.innerHTML="<td></td><td contenteditable='true'>"+data['nom']+"</td><td contenteditable='true'>"+data['prenom']+"</td><td contenteditable='true'>"+data['telephone']+"</td><td contenteditable='true'>"+data['courriel']+"</td><td><a class='supprimer' href='#'>Delete</a></td><td><a class='sauver' href='#'>Sauver</a></td>";
+
+			document.getElementsByClassName('tableau')[0].appendChild(node);
+		};
+
+		function traiterRequest(e)
+		{
+			if(xhr.readyState == 4 && xhr.status == 200)
+			{
+				console.log('ajouter_ajax fonctionne');
+				let  maReponse = JSON.parse(xhr.responseText);
+			};
+		};
+	});
+
+</script>
+</html>

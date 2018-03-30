@@ -1,0 +1,21 @@
+<form class='formAjouter' action="/ajouter_ajax" name='mon_formulaire2' id='mon_formulaire2' method="POST" >
+ <input type = "text" placeholder="Nom" name = "nom" class="ajouter"> 
+ <input type = "text" placeholder="Prénom" name = "prenom" class="ajouter">
+ <input type = "text" placeholder="Téléphone" name = "telephone" class="ajouter">
+ <input type = "text" placeholder="Courriel" name = "courriel" class="ajouter">
+ <input type="button" value='Ajouter' id="btnAjouter" >
+</form>
+
+<form class='formModifier' action="/modifier_ajax" name='mon_formulaire' id='mon_formulaire' method="POST" >
+ <input type = "hidden" placeholder="id" name = "_id" value=''> 
+ <input type = "text" placeholder="Nom" name = "nom"> 
+ <input type = "text" placeholder="Prénom" name = "prenom">
+ <input type = "text" placeholder="Téléphone" name = "telephone">
+ <input type = "text" placeholder="Courriel" name = "courriel">
+ <input type="submit" value='modifier'>
+</form>
+
+<form class='formRechercher' action="/rechercher" name='mon_formulaire3' id='mon_formulaire3' method="POST" >
+ <input type = "search" placeholder="Rechercher" name = "rechercher"> 
+ <input type="submit" value='Rechercher'>
+</form>
