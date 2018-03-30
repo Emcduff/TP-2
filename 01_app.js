@@ -115,3 +115,8 @@ app.get('/supprimer_ajax/:id', (req, res) => {
 		if (err) return console.log(err);
 	});
 });
+
+//Route pour le chat
+app.get('/chat', (req, res) => {
+	res.render('socket_vue.ejs');
+});
