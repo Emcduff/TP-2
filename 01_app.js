@@ -13,6 +13,8 @@ let longTabPrenom = tableau.tabPrenom.length;
 
 var util = require("util");
 var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
