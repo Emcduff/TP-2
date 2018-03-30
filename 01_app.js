@@ -120,3 +120,21 @@ app.get('/supprimer_ajax/:id', (req, res) => {
 app.get('/chat', (req, res) => {
 	res.render('socket_vue.ejs');
 });
+
+//Enregistrer un utilisateur sur le chat avec Ajax
+app.post('/enregistrer_ajax', (req, res) => {
+
+	db.collection('chat').insert({"id_utilisateur": req.body.id_utilisateur, "nom": req.body.nom}, (err, resultat) => {
+		if (err) return console.log(err);
+
+		let tableauUtilisateur [];
+
+		db.collection('chat').find().toArray(function(err, resultat){
+			if (err) return console.log(err);
+			for (let x=0; x<resultat.length;x++){
+				tableauUtilisateur.push({"id_utilisateur": resultat[x].id_utilisateur, "nom": resultat[x].nom});
+			};
+			res.send(JSON.stringify({"tableauUtilisateur":tableauUtilisateur}));
+		});
+	});
+});
