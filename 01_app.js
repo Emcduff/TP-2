@@ -127,7 +127,7 @@ app.post('/enregistrer_ajax', (req, res) => {
 	db.collection('chat').insert({"id_utilisateur": req.body.id_utilisateur, "nom": req.body.nom}, (err, resultat) => {
 		if (err) return console.log(err);
 
-		let tableauUtilisateur [];
+		let tableauUtilisateur = [];
 
 		db.collection('chat').find().toArray(function(err, resultat){
 			if (err) return console.log(err);
