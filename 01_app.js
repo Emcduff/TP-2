@@ -6,11 +6,10 @@ const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 
+const app = express();
 const http = require('http');
 const server = http.Server(app);
 const io = require('./mes_modules/chat_socket').listen(server);
-
-const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -19,16 +18,16 @@ app.set("view engine", "ejs");
 
 let db // variable qui contiendra le lien sur la BD
 MongoClient.connect('mongodb://127.0.0.1:27017', (err, database) => {
- if (err) return console.log(err)
- db = database.db('carnet_adresse')
+ 	if (err) return console.log(err);
+ 	db = database.db('carnet_adresse');
 
 // lancement du serveur Express sur le port 8081
- server.listen(8081, (err) => {
- if (err) console.log(err)
- let host = server.address().address
- let port = server.address().port 
- console.log('connexion à la BD et on écoute sur le port ' + port)
- })
+server.listen(8081, (err) => {
+ 	if (err) console.log(err);
+ 	let host = server.address().address;
+ 	let port = server.address().port;
+ 	console.log('connexion à la BD et on écoute sur le port ' + port);
+ 	})
 })
 
 //Route accueil
