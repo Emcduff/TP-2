@@ -11,6 +11,16 @@ module.exports.listen = function(server){
     		socket.broadcast.emit('nouvUtilisateur', [data.id, data.utilisateur]);
     	});
 
+    	socket.on('messagePublique', function(data) {
+	   		io.sockets.emit('afficherMessage', data);
+	   	});
+
+	   	socket.on('deconnexion', function(data) {
+    		console.log(socket.id);
+	    	io.sockets.emit('deconnecter', socket.id);
+	    	db.collection('chat').findOneAndDelete( {'id': socket.id});
+		});
+
 	});
- return io;
+	return io;
 }
