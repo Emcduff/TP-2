@@ -12,15 +12,15 @@
 				<table id="message">
 			</table>
 		</div>
-		<section id="message_a_transmettre">
-			<input type="text" name="txtMessage"><button onclick="envoyerMessage()"><%= 'envoyer' %></button>
+		<section>
+			<input id="leMessage" type="text" name="txtMessage"><button onclick="envoyerMessage()"><%= 'envoyer' %></button>
 		</section>
 	</div>
 </section>
 
 <script type="text/javascript">
-
 let socket;
+let nomUtilisateur;
 
 window.onload = ()=>{
 	socket = io();
@@ -29,13 +29,20 @@ window.onload = ()=>{
  		console.log('Le socket id = ' + socket.id);
 
  		socket.on('nouvUtilisateur', function(data){
- 			console.log("nouvUtilisateur");
+ 			console.log("nouvel Utilisateur");
  			let trUtilisateur = document.createElement("tr");
  			trUtilisateur.setAttribute("id", data[0]);
  			trUtilisateur.innerHTML = data[1];
  			document.getElementById("list_user").appendChild(trUtilisateur); 
  		});
 
+ 		socket.on('afficherMessage', function(data){
+ 			console.log("Message publique affiche: " + data.message);
+ 		});
+
+ 		socket.on('deconnecter', function(data){
+ 			console.log("Utilisateur deconnecter");
+ 		});
 
  	});
  }
@@ -43,7 +50,7 @@ window.onload = ()=>{
 /* ---------------------------------------------------------- */
 function enregistrement(){
 	var elmUtilisateur = document.querySelector('#enregistrement input');
-	console.log(elmUtilisateur.value);
+	nomUtilisateur = elmUtilisateur.value;
 
  	socket.emit('ajouterUtilisateur', {utilisateur : elmUtilisateur.value, id : socket.id});
 
@@ -75,8 +82,10 @@ function enregistrement(){
  	document.getElementsByClassName("chat")[0].style.display = "flex";
 };
 
+/* ---------------------------------------------------------- */
 function envoyerMessage(){
-
+	let leMessage = document.getElementById("leMessage").value;
+	socket.emit('messagePublique', {user: nomUtilisateur, message: leMessage});
 };
 
 </script>
