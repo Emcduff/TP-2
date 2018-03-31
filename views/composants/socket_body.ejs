@@ -13,7 +13,7 @@
 			</table>
 		</div>
 		<section id="message_a_transmettre">
-			<input type="text" name="txtMessage"><button><%= 'envoyer' %></button>
+			<input type="text" name="txtMessage"><button onclick="envoyerMessage()"><%= 'envoyer' %></button>
 		</section>
 	</div>
 </section>
@@ -24,12 +24,15 @@ let socket;
 
 window.onload = ()=>{
 	socket = io();
-	console.log(socket.id);
  	socket.on('connect', function(){
- 		console.log('Le socket id = ' + socket.id); 
- 		socket.on('ackUser', function(data){
+ 		thisID = socket.id;
+ 		console.log('Le socket id = ' + socket.id);
+
+ 		socket.on('ajouterUtilisateur', function(data){
  			console.log('data en provenance du serveur = ' + data.user);
  		});
+
+
  	});
  }
 
@@ -39,6 +42,13 @@ function enregistrement(){
 	console.log(elmUser.value);
 
  	socket.emit('setUser', {user : elmUser.value});
+
+ 	document.getElementById("enregistrement").style.display = "none";
+ 	document.getElementsByClassName("chat")[0].style.display = "flex";
+};
+
+function envoyerMessage(){
+
 };
 
 </script>
