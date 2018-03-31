@@ -15,7 +15,7 @@ module.exports.listen = function(server){
 	   		io.sockets.emit('afficherMessage', data);
 	   	});
 
-	   	socket.on('deconnexion', function(data) {
+	   	socket.on('disconnect', function(data) {
     		console.log(socket.id);
 	    	io.sockets.emit('deconnecter', socket.id);
 	    	db.collection('chat').findOneAndDelete( {'id': socket.id});

@@ -44,6 +44,7 @@ window.onload = ()=>{
 
  		socket.on('deconnecter', function(data){
  			console.log("Utilisateur deconnecter");
+ 			document.getElementById("liste_utilisateur").removeChild(document.querySelector('tr[id="'+data+'"]'));
  		});
 
  	});
