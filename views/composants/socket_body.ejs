@@ -30,6 +30,10 @@ window.onload = ()=>{
 
  		socket.on('nouvUtilisateur', function(data){
  			console.log("nouvUtilisateur");
+ 			let trUtilisateur = document.createElement("tr");
+ 			trUtilisateur.setAttribute("id", data[0]);
+ 			trUtilisateur.innerHTML = data[1];
+ 			document.getElementById("list_user").appendChild(trUtilisateur); 
  		});
 
 
@@ -42,6 +46,31 @@ function enregistrement(){
 	console.log(elmUtilisateur.value);
 
  	socket.emit('ajouterUtilisateur', {utilisateur : elmUtilisateur.value, id : socket.id});
+
+ 	xhr = new XMLHttpRequest();
+			data =
+			{
+				"id" : socket.id, 
+ 				"nom" : elmUtilisateur.value,
+			};
+
+		xhr.open('POST', "/enregistrer_ajax", true);
+
+		sData = JSON.stringify(data);
+		xhr.setRequestHeader('Content-type', 'application/json');
+		xhr.send(sData);
+
+		xhr.addEventListener("readystatechange", traiterRequest, false);
+
+
+		function traiterRequest(e)
+		{
+			if(xhr.readyState == 4 && xhr.status == 200)
+			{
+				console.log('supprimer_ajax fonctionne');
+				let  maReponse = JSON.parse(xhr.responseText);
+			};
+		};
 
  	document.getElementById("enregistrement").style.display = "none";
  	document.getElementsByClassName("chat")[0].style.display = "flex";

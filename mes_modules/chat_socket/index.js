@@ -8,7 +8,7 @@ module.exports.listen = function(server){
 
     	socket.on('ajouterUtilisateur', function(data){
     		console.log('ajouterUtilisateur');
-    		socket.broadcast.emit('nouvUtilisateur', [data.utilisateur, data.id]);
+    		socket.broadcast.emit('nouvUtilisateur', [data.id, data.utilisateur]);
     	});
 
 	});
