@@ -28,8 +28,8 @@ window.onload = ()=>{
  		thisID = socket.id;
  		console.log('Le socket id = ' + socket.id);
 
- 		socket.on('ajouterUtilisateur', function(data){
- 			console.log('data en provenance du serveur = ' + data.user);
+ 		socket.on('nouvUtilisateur', function(data){
+ 			console.log("nouvUtilisateur");
  		});
 
 
@@ -38,10 +38,10 @@ window.onload = ()=>{
 
 /* ---------------------------------------------------------- */
 function enregistrement(){
-	var elmUser = document.querySelector('#enregistrement input');
-	console.log(elmUser.value);
+	var elmUtilisateur = document.querySelector('#enregistrement input');
+	console.log(elmUtilisateur.value);
 
- 	socket.emit('setUser', {user : elmUser.value});
+ 	socket.emit('ajouterUtilisateur', {utilisateur : elmUtilisateur.value, id : socket.id});
 
  	document.getElementById("enregistrement").style.display = "none";
  	document.getElementsByClassName("chat")[0].style.display = "flex";
