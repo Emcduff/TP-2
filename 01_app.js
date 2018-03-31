@@ -3,6 +3,7 @@
 const peupler = require("./mes_modules/peupler");
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 
@@ -17,6 +18,15 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.set("view engine", "ejs");
 
+i18n.configure({ 
+   locales : ['fr', 'en'],
+   cookie : 'langue', 
+   directory : __dirname + '/locales' 
+});
+
+app.use(cookieParser());
+app.use(i18n.init);
+
 let db // variable qui contiendra le lien sur la BD
 MongoClient.connect('mongodb://127.0.0.1:27017', (err, database) => {
  	if (err) return console.log(err);
@@ -30,6 +40,13 @@ server.listen(8081, (err) => {
  	console.log('connexion à la BD et on écoute sur le port ' + port);
  	})
 })
+
+//Route qui séléctionne la langue
+app.get('/:local(en|fr)', function (req, res) {
+	res.cookie('langue', req.params.local);
+	res.setLocale(req.params.local);
+	res.render('accueil.ejs');
+});
 
 //Route accueil
 app.get('/', (req, res) => {

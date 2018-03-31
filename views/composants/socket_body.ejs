@@ -1,7 +1,7 @@
-<h2><%= 'message' %></h2>
+<h2><%= __('Messagerie') %></h2>
 <section id="enregistrement">
 	<input type="text">
-	<button onclick="enregistrement()">Enregistrement</button>
+	<button onclick="enregistrement()"><%= __('Enregistrer') %></button>
 </section>
 
 <section class="chat" style="display:none">
@@ -13,7 +13,7 @@
 			</table>
 		</div>
 		<section>
-			<input id="leMessage" type="text" name="txtMessage"><button onclick="envoyerMessage()"><%= 'envoyer' %></button>
+			<input id="leMessage" type="text" name="txtMessage"><button onclick="envoyerMessage()"><%= __('Envoyer') %></button>
 		</section>
 	</div>
 </section>
