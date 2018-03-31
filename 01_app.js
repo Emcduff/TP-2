@@ -10,6 +10,7 @@ const app = express();
 const http = require('http');
 const server = http.Server(app);
 const io = require('./mes_modules/chat_socket').listen(server);
+const i18n = require ('i18n');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
