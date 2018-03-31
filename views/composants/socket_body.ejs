@@ -5,7 +5,7 @@
 </section>
 
 <section class="chat" style="display:none">
-	<table id="list_user">
+	<table id="liste_utilisateur">
 	</table>
 	<div class="boiteMessages">
 		<div class="lesMessages">
@@ -25,19 +25,21 @@ let nomUtilisateur;
 window.onload = ()=>{
 	socket = io();
  	socket.on('connect', function(){
- 		thisID = socket.id;
- 		console.log('Le socket id = ' + socket.id);
+ 		//console.log('Le socket id = ' + socket.id);
 
  		socket.on('nouvUtilisateur', function(data){
- 			console.log("nouvel Utilisateur");
+ 			//console.log("nouvel Utilisateur");
  			let trUtilisateur = document.createElement("tr");
  			trUtilisateur.setAttribute("id", data[0]);
  			trUtilisateur.innerHTML = data[1];
- 			document.getElementById("list_user").appendChild(trUtilisateur); 
+ 			document.getElementById("liste_utilisateur").appendChild(trUtilisateur); 
  		});
 
  		socket.on('afficherMessage', function(data){
- 			console.log("Message publique affiche: " + data.message);
+ 			//console.log("Message publique affiche: " + data.message);
+ 			let trMessage = document.createElement("tr");
+ 			trMessage.innerHTML = "<td class='noms'>"+data.nom+"</td>"+"<td class='messages'>"+data.message+"</td>";
+ 			document.getElementById("message").appendChild(trMessage);
  		});
 
  		socket.on('deconnecter', function(data){
@@ -85,7 +87,7 @@ function enregistrement(){
 /* ---------------------------------------------------------- */
 function envoyerMessage(){
 	let leMessage = document.getElementById("leMessage").value;
-	socket.emit('messagePublique', {user: nomUtilisateur, message: leMessage});
+	socket.emit('messagePublique', {nom: nomUtilisateur, message: leMessage});
 };
 
 </script>
